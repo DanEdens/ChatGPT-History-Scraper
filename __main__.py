@@ -1,22 +1,24 @@
 from selenium import webdriver
 
-def retrieve_list_of_items(url, xpath):
-    driver = webdriver.Chrome()
-    driver.get(url)
+class RetrieveListOfItems:
+    def __init__(self, url, xpath):
+        self.url = url
+        self.xpath = xpath
+        self.driver = webdriver.Chrome()
 
-    element = driver.find_element_by_xpath(xpath)
+    def __enter__(self):
+        self.driver.get(self.url)
+        element = self.driver.find_element_by_xpath(self.xpath)
+        parent_element = element.find_element_by_xpath("..")
+        self.child_elements = parent_element.find_elements_by_xpath("./*")
+        return self
 
-    # Get the parent element that contains the list of items
-    parent_element = element.find_element_by_xpath("..")
+    def __exit__(self, type, value, traceback):
+        self.driver.quit()
 
-    # Get all the child elements of the parent element
-    child_elements = parent_element.find_elements_by_xpath("./*")
-
-    # Loop through the child elements and print their text
-    for child in child_elements:
-        print(child.text)
-
-    driver.quit()
+    def print_items(self):
+        for child in self.child_elements:
+            print(child.text)
 
 if __name__ == "__main__":
-    retrieve_list_of_items("https://www.yourwebsite.com", '//*[@id="__next"]/div[1]/div[2]/div/div/nav/div/div/a[2]')
+    with RetrieveListOfItems("https://www.yourwebsite.
