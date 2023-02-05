@@ -1,7 +1,7 @@
 from selenium import webdriver
 
 def retrieve_list_of_items(url, xpath):
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome()
     driver.get(url)
 
     element = driver.find_element_by_xpath(xpath)
@@ -20,4 +20,3 @@ def retrieve_list_of_items(url, xpath):
 
 if __name__ == "__main__":
     retrieve_list_of_items("https://www.yourwebsite.com", '//*[@id="__next"]/div[1]/div[2]/div/div/nav/div/div/a[2]')
-
