@@ -21,4 +21,5 @@ class RetrieveListOfItems:
             print(child.text)
 
 if __name__ == "__main__":
-    with RetrieveListOfItems("https://www.yourwebsite.
+    with RetrieveListOfItems("https://www.yourwebsite.com", '//*[@id="__next"]/div[1]/div[2]/div/div/nav/div/div/a[2]') as items:
+        items.print_items()
